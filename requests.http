@@ -1,0 +1,111 @@
+
+#########################
+### Sign up & Register ...
+#########################
+
+### Sign up
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "email": "ronny@bruhin.me",
+  "username": "ronny",
+  "password": "12345678"
+}
+
+
+### Sign in
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
+
+{
+  "email": "ronny@bruhin.me",
+  "password": "12345678"
+}
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
+### Sign in as user
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
+
+{
+  "email": "user@bbcag.ch",
+  "password": "user1234"
+}
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
+### Sign in as admin
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
+
+{
+  "email": "admin@bbcag.ch",
+  "password": "admin1234"
+}
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
+
+#######################
+### Posts ...
+#######################
+
+### Get all posts
+GET http://localhost:8080/examples
+Authorization: Bearer {{auth_token}}
+
+#######################
+### Teams ...
+#######################
+
+### Get all teams
+GET http://localhost:8080/teams
+Authorization: Bearer {{auth_token}}
+
+### Post new teams
+POST http://localhost:8080/teams
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "abbreviation": "KC",
+  "name": "Kansas City Chiefs",
+  "city": "Kansas City",
+  "state": "Missouri",
+  "conference": "AFC",
+  "division": "West"
+}
+
+#######################
+### Players ...
+#######################
+
+### Get all players
+GET http://localhost:8080/players
+Authorization: Bearer {{auth_token}}
+
+### Post new player
+POST http://localhost:8080/teams
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "firstname": "Patrick",
+  "middlename": "Lavon",
+  "lastname": "Mahomes II",
+  "birthdate": "1995-09-17T15:24:03.833Z",
+  "pos": "QB",
+  "college": "Texas Tech",
+  "active": true,
+  "teamIds": [
+    1
+  ]
+}
